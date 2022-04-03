@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
-import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
+import { setCookie, deleteCookie } from "../../shared/Cookie";
 
 // action
 const LOG_IN = "LOG_IN";

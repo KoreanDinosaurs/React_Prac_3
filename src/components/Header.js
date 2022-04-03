@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components"
 import Button from "../elements/Button";
-import user, { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const Header = (props) => {
     const dispatch = useDispatch();
