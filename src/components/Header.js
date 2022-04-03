@@ -4,18 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
 import Button from "../elements/Button";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { apiKey } from "../shared/firebase";
 
 const Header = (props) => {
     const dispatch = useDispatch();
     const is_login = useSelector(state => state.user.is_login)
     
-    if(is_login){
+    const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`
+    const is_session = sessionStorage.getItem(_session_key) ? true : false
+    
+    if(is_login && is_session){
         return(
             <React.Fragment>
                 <Container>
                     <Btn>DDongram</Btn>
                     <div>
-                        <Button size="22px" margin="0 10px 0 0" >Log In</Button>
                         <Button size="22px" _onClick={()=>{dispatch(userActions.logoutAction())}}>Log Out</Button>
                     </div>
                 </Container>

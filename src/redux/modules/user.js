@@ -3,7 +3,7 @@ import { produce } from "immer";
 
 import { setCookie, deleteCookie } from "../../shared/Cookie";
 import { auth } from "../../shared/firebase"
-import { createUserWithEmailAndPassword, updateProfile, setPersistence, signInWithEmailAndPassword, browserSessionPersistence } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, setPersistence, signInWithEmailAndPassword, browserSessionPersistence, onAuthStateChanged } from "firebase/auth";
 
 // action
 const LOG_OUT = "LOG_OUT";
@@ -78,6 +78,26 @@ const loginFB = (id, pwd) => {
     }
 }
 
+const loginCheckFB = () => {
+    return function (dispatch, getState, {history}){
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                dispatch(
+                    setUser({
+                        user_name: user.displayName,
+                        user_profile: "",
+                        id: user.email,
+                        uid: user.uid,
+                    })
+                )
+            } else {
+                dispatch(logOut());
+            }
+        });
+    }
+}
+
+
 // initialState
 const initialState = {
     user: null,
@@ -89,6 +109,7 @@ export default handleActions(
     {
         [SET_USER]: (state, action) => produce(state, (draft) => {
             setCookie("is_login", "success");
+            console.log(action.payload)
             draft.user = action.payload.user;
             draft.is_login = true;
         }),
@@ -112,6 +133,7 @@ const actionCreators = {
     logoutAction,
     signupFB,
     loginFB,
+    loginCheckFB
 };
   
 export { actionCreators };
