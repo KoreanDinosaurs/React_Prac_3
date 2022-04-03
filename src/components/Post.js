@@ -1,13 +1,10 @@
 import React from "react";
-import styled from "styled-components";
-import Grid from "../elements/Grid";
-import Image from "../elements/Image";
-import Text from "../elements/Text";
+
+import {Grid, Image, Text} from "../elements/index"
 
 const Post = (props) => {
     return(
-        <Container>
-            <Grid>
+            <Grid width="600px" margin="30px 0 0 0">
                 <Grid is_flex padding="16px">
                     <Grid is_flex width="auto">
                     <Image shape="circle" src={props.src} />
@@ -27,7 +24,6 @@ const Post = (props) => {
                     <Text bold>댓글 {props.comment_cnt}개</Text>
                 </Grid>
             </Grid> 
-        </Container>
     )
 
 }
@@ -42,11 +38,5 @@ Post.defaultProps = {
     comment_cnt: 10,
     insert_dt: "2021-02-27 10:00:00",
   };
-
-const Container = styled.div`
-    margin-top: 30px;
-    width: 600px;
-    border: 2px red solid;
-`;
 
 export default Post;

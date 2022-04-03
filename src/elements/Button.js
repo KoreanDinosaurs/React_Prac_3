@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components"
 
 const Button = (props) => {
-    const { children, _onclick, padding, width, bg, color, size, margin } = props;
+    const { children, _onClick, padding, width, bg, color, size, margin } = props;
 
     const styles = {
         padding,
@@ -14,14 +14,14 @@ const Button = (props) => {
     }
 
     return(
-        <Btn {...styles} onClick={_onclick}>{children}</Btn>
+        <Btn {...styles} onClick={_onClick}>{children}</Btn>
     )
 
 }
 
 Button.defaultProps = {
     children: null,
-    _onclick: () => {},
+    _onClick: () => {},
     padding: "10px",
     margin: false,
     width: "auto",
