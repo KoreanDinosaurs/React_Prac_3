@@ -3,7 +3,7 @@ import { produce } from "immer";
 
 import { setCookie, deleteCookie } from "../../shared/Cookie";
 import { auth } from "../../shared/firebase"
-import { createUserWithEmailAndPassword, updateProfile, setPersistence, signInWithEmailAndPassword, browserSessionPersistence, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut, updateProfile, setPersistence, signInWithEmailAndPassword, browserSessionPersistence, onAuthStateChanged } from "firebase/auth";
 
 // action
 const LOG_OUT = "LOG_OUT";
@@ -16,13 +16,6 @@ const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
 
 // middlewares
-
-const logoutAction = (user) => {
-    return function (dispatch, getState, {history}){
-        dispatch(logOut(user));
-        history.push('/')
-    }
-}
 
 const signupFB = (id, pwd, user_name) => {
     return function (dispatch, getState, {history}){
@@ -97,6 +90,19 @@ const loginCheckFB = () => {
     }
 }
 
+const logoutFB = () => {
+    return function (dispatch, getState, {history}){
+        signOut(auth)
+        .then(() => {
+            dispatch(logOut());
+            history.replace('/');
+        })
+        .catch((error) => {
+            console.log(error)
+        });  
+    }
+}
+
 
 // initialState
 const initialState = {
@@ -130,10 +136,10 @@ export default handleActions(
 const actionCreators = {
     setUser,
     logOut,
-    logoutAction,
     signupFB,
     loginFB,
-    loginCheckFB
+    loginCheckFB,
+    logoutFB,
 };
   
 export { actionCreators };

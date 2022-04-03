@@ -19,7 +19,7 @@ const Header = (props) => {
                 <Container>
                     <Btn>DDongram</Btn>
                     <div>
-                        <Button size="22px" _onClick={()=>{dispatch(userActions.logoutAction())}}>Log Out</Button>
+                        <Button size="22px" _onClick={()=>{dispatch(userActions.logoutFB())}}>Log Out</Button>
                     </div>
                 </Container>
             </React.Fragment>
