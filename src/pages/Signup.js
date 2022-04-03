@@ -19,7 +19,6 @@ const Signup = (props) => {
         dispatch(userActions.signupFB(id, pwd, user_name))
     }
     
-    
     return(
         <Section>
             <Grid width="40%">

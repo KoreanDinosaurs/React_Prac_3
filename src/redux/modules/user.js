@@ -3,7 +3,7 @@ import { produce } from "immer";
 
 import { setCookie, deleteCookie } from "../../shared/Cookie";
 import { auth } from "../../shared/firebase"
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, setPersistence, signInWithEmailAndPassword, browserSessionPersistence } from "firebase/auth";
 
 // action
 const LOG_OUT = "LOG_OUT";
@@ -16,12 +16,6 @@ const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
 
 // middlewares
-const loginAction = (user) => {
-    return function (dispatch, getState, {history}){
-        dispatch(setUser(user));
-        history.push('/')
-    }
-}
 
 const logoutAction = (user) => {
     return function (dispatch, getState, {history}){
@@ -49,6 +43,38 @@ const signupFB = (id, pwd, user_name) => {
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
         });
+    }
+}
+
+const loginFB = (id, pwd) => {
+    return function (dispatch, getState, {history}){
+        setPersistence(auth, browserSessionPersistence)
+        .then(() => {
+            signInWithEmailAndPassword(auth, id, pwd)
+            .then((userCredential) => {
+                console.log(userCredential)
+                dispatch(
+                    setUser({
+                        user_name: userCredential.user.displayName,
+                        id: id,
+                        user_profile: "",
+                        uid: userCredential.user.uid,
+                    })
+                );
+                history.push('/')
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+            });
+        })
+        .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });    
     }
 }
 
@@ -83,9 +109,9 @@ export default handleActions(
 const actionCreators = {
     setUser,
     logOut,
-    loginAction,
     logoutAction,
     signupFB,
+    loginFB,
 };
   
 export { actionCreators };
