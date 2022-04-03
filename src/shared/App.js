@@ -1,21 +1,21 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+import { Route } from 'react-router-dom';
 
+import { Login, Main, Signup } from '../pages/index';
+import { history } from '../redux/configureStore';
 import Header from '../components/Header';
-import Login from '../pages/Login';
-import Main from '../pages/Main';
-import Signup from '../pages/Signup';
 
 function App() {
   return (
-      <BrowserRouter>
+      <React.Fragment>
         <Header />
-        <Routes>
-          <Route path="/" element={<Main />}/>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/signup" element={<Signup />}/>
-        </Routes>
-      </BrowserRouter>
+        <ConnectedRouter history={history}>
+          <Route path="/" exact component={Main} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup}/>
+        </ConnectedRouter>
+      </React.Fragment>
   );
 }
 
