@@ -5,33 +5,38 @@ import styled from "styled-components"
 import Button from "../elements/Button";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { apiKey } from "../shared/firebase";
+import { history } from "../redux/configureStore";
+import { Grid } from "../elements";
 
 const Header = (props) => {
     const dispatch = useDispatch();
-    const is_login = useSelector(state => state.user.is_login)
-    
-    const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`
-    const is_session = sessionStorage.getItem(_session_key) ? true : false
+    const is_login = useSelector(state => state.user.is_login);
+
+    const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`;
+    const is_session = sessionStorage.getItem(_session_key) ? true : false;
     
     if(is_login && is_session){
         return(
             <React.Fragment>
                 <Container>
                     <Btn>DDongram</Btn>
-                    <div>
+                    <Grid width="180px" is_flex>
+                        <Button size="22px">Info</Button>
+                        <Button size="22px">Alram</Button>
                         <Button size="22px" _onClick={()=>{dispatch(userActions.logoutFB())}}>Log Out</Button>
-                    </div>
+                    </Grid>
                 </Container>
             </React.Fragment>
         )
     }
+
     return(
         <React.Fragment>
             <Container>
                 <Btn>DDongram</Btn>
                 <div>
-                    <Button size="22px" margin="0 10px 0 0" >Log In</Button>
-                    <Button size="22px" >Sign Up</Button>
+                    <Button size="22px" margin="0 10px 0 0" _onClick={() => {history.push('/login')}}>Log In</Button>
+                    <Button size="22px" _onClick={() => {history.push('/signup')}}>Sign Up</Button>
                 </div>
             </Container>
         </React.Fragment>
@@ -58,7 +63,6 @@ const Btn = styled.button`
     background: transparent;
     cursor: pointer;
 `;
-
 
 export default Header;
 
