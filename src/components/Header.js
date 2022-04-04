@@ -47,12 +47,14 @@ const Container = styled.div`
     position: fixed;
     width: 100vw;
     height: 60px;
-    border: 1px solid red;
     padding: 20px;
-
+    z-index: 1000;
+    background: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 `;
 
 const Btn = styled.button`

@@ -4,7 +4,7 @@ import {Grid, Image, Text} from "../elements/index"
 
 const Post = (props) => {
     return(
-            <Grid width="600px" margin="30px 0 0 0">
+            <Grid width="600px" margin="30px 0 0 0" shadow>
                 <Grid is_flex padding="16px">
                     <Grid is_flex width="auto">
                     <Image shape="circle" src={props.src} />

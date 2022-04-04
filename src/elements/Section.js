@@ -19,7 +19,6 @@ const Container = styled.div`
     width: 100%;
     height: calc(100vh - 60px);
     margin-top: 60px; // Header height
-    border: 1px dotted blue;
 
     display: flex;
     flex-direction: column;
