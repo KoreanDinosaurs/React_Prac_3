@@ -17,7 +17,7 @@ const setPreview = createAction(SET_PREVIEW, (preview) => ({preview}));
 const initialState = {
     image_url: "",
     uploading: false,
-    preview: "http://via.placeholder.com/400x300",
+    preview: null,
 };
 
 function uploadImageFB(image) {

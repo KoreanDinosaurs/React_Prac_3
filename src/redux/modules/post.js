@@ -1,9 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { doc, collection, getDocs, addDoc } from "firebase/firestore";
-import { db } from "../../shared/firebase"
+import { db, storage } from "../../shared/firebase"
 import moment from "moment";
 import user from "./user";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { actionCreators as imageActions } from "./image";
 
 // action
 const SET_POST = "SET_POST"
@@ -47,25 +49,49 @@ const getPostFB = () => {
 const addPostFB = (contents = '') => {
     return async function (dispatch, getState, {history}){
         const _user = getState().user.user;
-       
+
         const user_info = {
             user_name: _user.user_name,
             user_id: _user.id,
             user_profile: _user.user_profile,
         }
+
         const _post = {
             ...initialPost,
             contents: contents,
         }
        
-        const docRef = await addDoc(collection(db, "post"), {
-           ...user_info,
-           ..._post,
-        });
+        const _image = getState().image.preview;
+        const storageRef = ref(storage, `images/${user_info.user_id}_${new Date().getTime()}`);
 
-        let post ={user_info, ..._post, id: docRef.id}
-        dispatch(addPost(post))
-        history.replace('/')
+        uploadString(storageRef, _image, 'data_url').then((snapshot) => {
+            getDownloadURL(storageRef)
+            .then((url) => {
+                console.log(url)
+                dispatch(imageActions.uploadImage(url))
+                return url
+            })
+            .then(async(url) => {
+                const docRef = await addDoc(collection(db, "post"), {
+                    ...user_info,
+                    ..._post,
+                    image_url: url
+                });
+         
+                let post ={user_info, ..._post, id: docRef.id, image_url: url}
+                dispatch(addPost(post))
+                history.replace('/')
+                dispatch(imageActions.setPreview(null))
+            })
+            .catch((error) => {
+                window.alert("포스트 작성에 문제가 있어요!");
+                console.log("post작성에 문제가 있습니다.", error)
+            });
+        })
+        .catch((error) => {
+            console.log("이미지 업로드에 문제가 있습니다.", error);
+            window.alert("이미지 업로드에 문제가 있어요!");
+        })
     }
 }
 

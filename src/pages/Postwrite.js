@@ -25,7 +25,7 @@ const Postwrite = (props) => {
             <Section>
               <Text size="36px" bold>앗! 잠깐!</Text>
               <Text size="16px">로그인 후에만 글을 쓸 수 있어요!</Text>
-              <Button _onClick={() => {history.replace('/')}}>로그인 하러가기</Button>
+              <Button _onClick={() => {history.replace('/login')}}>로그인 하러가기</Button>
             </Section>
         )
     }
@@ -46,7 +46,7 @@ const Postwrite = (props) => {
                     </Text>
                 </Grid>
 
-                <Image shape="rectangle" src={preview}/>
+                <Image shape="rectangle" src={preview ? preview : "http://via.placeholder.com/400x300"}/>
                 </Grid>
 
                 <Grid padding="16px">

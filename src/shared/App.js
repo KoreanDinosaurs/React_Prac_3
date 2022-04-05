@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { apiKey } from './firebase';
 import {actionCreators as userActions} from "../redux/modules/user";
 import { Button } from '../elements';
+import Search from './Search';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup}/>
           <Route path="/write" exact component={Postwrite}/>
+          <Route path="/search" exact component={Search}/>
         </ConnectedRouter>
         <Button circle _onClick={() => {history.push('/write')}}>+</Button>
       </React.Fragment>
