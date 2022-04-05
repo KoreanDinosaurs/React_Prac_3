@@ -1,9 +1,8 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { doc, collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db, storage } from "../../shared/firebase"
 import moment from "moment";
-import user from "./user";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { actionCreators as imageActions } from "./image";
 

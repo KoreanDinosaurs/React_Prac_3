@@ -10,6 +10,7 @@ import { apiKey } from './firebase';
 import {actionCreators as userActions} from "../redux/modules/user";
 import { Button } from '../elements';
 import Search from './Search';
+import Notification from '../components/Notification';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
 
   return (
       <React.Fragment>
+        <Notification/>
         <ConnectedRouter history={history}>
           <Header />
           <Route path="/" exact component={Main} />

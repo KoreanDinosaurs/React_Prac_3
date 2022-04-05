@@ -6,6 +6,7 @@ import { connectRouter } from "connected-react-router";
 import User from "./modules/user";
 import Post from "./modules/post";
 import Image from "./modules/image";
+import Modal from "./modules/modal"
 
 export const history = createBrowserHistory();
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     user: User,
     post: Post,
     image: Image,
+    modal: Modal,
     router: connectRouter(history),
 });
 
