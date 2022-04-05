@@ -45,14 +45,19 @@ const ImageDefault = styled.div`
 `;
 
 const AspectOutter = styled.div`
+    position: relative;
+    overflow: hidden;
     width: 100%;
     min-width: 250px;
+    height: 600px;
+    background-color: #e0e0e0;
 `;
 
 const AspectInner = styled.div`
-    position: relative;
-    padding-top: 75%;
-    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-position: center;
     background-image: url("${(props) => props.src}");
     background-size: cover;
 `;

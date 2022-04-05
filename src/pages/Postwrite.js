@@ -56,25 +56,26 @@ const Postwrite = (props) => {
     
     return(
         <Section>
-            <Grid padding="16px">
-                <Text margin="0px" size="36px" bold>
-                    {post_id ? "게시글 수정" : "게시글 작성"}
-                </Text>
-                <Upload/>
+            <Grid width="600px" margin="30px 0 0 0" shadow>
+                <Grid padding="16px">
+                    <Text margin="0px" size="36px" bold>
+                        {post_id ? "게시글 수정" : "게시글 작성"}
+                    </Text>
+                    <Upload/>
                 </Grid>
 
                 <Grid>
-                <Grid padding="16px">
-                    <Text margin="0px" size="24px" bold>
-                    미리보기
-                    </Text>
+                    <Grid padding="16px">
+                        <Text margin="0px" size="24px" bold>
+                        미리보기
+                        </Text>
+                    </Grid>
+
+                    <Image shape="rectangle" src={preview ? preview : "http://via.placeholder.com/400x300"}/>
                 </Grid>
 
-                <Image shape="rectangle" src={preview ? preview : "http://via.placeholder.com/400x300"}/>
-                </Grid>
-
                 <Grid padding="16px">
-                <Input _onChange={changeContents} label="게시글 내용" placeholder="게시글 작성" multiLine value={contents} />
+                    <Input _onChange={changeContents} label="게시글 내용" placeholder="게시글 작성" multiLine value={contents} />
                 </Grid>
 
                 <Grid padding="16px">
@@ -82,6 +83,7 @@ const Postwrite = (props) => {
                         ? <Button _onClick={editPost}>게시글 수정</Button>
                         : <Button _onClick={addPost}>게시글 작성</Button>
                     }
+                </Grid>
             </Grid>
         </Section>  
     )
