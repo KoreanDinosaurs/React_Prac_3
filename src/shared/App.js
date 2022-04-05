@@ -37,7 +37,8 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup}/>
           <Route path="/write" exact component={Postwrite}/>
-          <Route path="/search" exact component={Search}/>
+          {/* <Route path="/search" exact component={Search}/> */}
+          <Route path="/write/:id" exact component={Postwrite}/>
         </ConnectedRouter>
         <Button circle _onClick={() => {history.push('/write')}}>+</Button>
       </React.Fragment>

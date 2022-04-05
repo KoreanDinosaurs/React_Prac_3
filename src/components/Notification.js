@@ -1,19 +1,22 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import Card from "./Card";
 
 const Notification = (props) => {
     const is_modal = useSelector(state => state.modal.click)
 
     return (
         <Container style={{display: is_modal}}>
+   
+                <Card/>
 
         </Container>
     )
 };
 
 const Container = styled.div`
-    position: absolute;
+    position: fixed;
     z-index: 1001;
     top: 55px;
     right: 100px;
@@ -22,7 +25,9 @@ const Container = styled.div`
     width: 500px;
     height: 500px;
     background: white;
+    padding: 20px 20px;
 `;
 
-
 export default Notification;
+
+

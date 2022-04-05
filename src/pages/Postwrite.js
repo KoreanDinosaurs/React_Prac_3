@@ -1,16 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Text, Image, Input, Button, Section } from "../elements";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configureStore";
 import Upload from "../shared/Upload";
+import { useParams } from "react-router-dom";
+import { actionCreators as imageActions } from "../redux/modules/image";
 
 const Postwrite = (props) => {
-    const preview = useSelector(state => state.image.preview)
     const dispatch = useDispatch();
     
-    const [contents, setContents] = useState('')
+    const is_login = useSelector(state => state.user.is_login)
+    const preview = useSelector(state => state.image.preview)
+    const post_list = useSelector(state => state.post.list)
+    
+    const params = useParams();
+    const post_id = params.id;
+    let _post = post_id ? post_list.find(p => p.id === post_id) : null;
+    
+    useEffect(() => {
+        if(post_id && !_post){
+            alert("포스트 정보가 없어요!");
+            history.goBack();
+            return;
+        }
 
+        if(post_id){
+            dispatch(imageActions.setPreview(_post.image_url))
+        }
+
+    }, [])
+
+    const [contents, setContents] = useState(_post ? _post.contents : "")
     const changeContents = (e) => {
         setContents(e.target.value)
     }
@@ -18,7 +39,10 @@ const Postwrite = (props) => {
     const addPost = () => {
         dispatch(postActions.addPostFB(contents))
     }
-    const is_login = useSelector(state => state.user.is_login)
+
+    const editPost = () => {
+        dispatch(postActions.editPostFB(post_id, {contents: contents}))
+    }
     
     if(!is_login){
         return(
@@ -34,7 +58,7 @@ const Postwrite = (props) => {
         <Section>
             <Grid padding="16px">
                 <Text margin="0px" size="36px" bold>
-                    게시글 작성
+                    {post_id ? "게시글 수정" : "게시글 작성"}
                 </Text>
                 <Upload/>
                 </Grid>
@@ -50,11 +74,14 @@ const Postwrite = (props) => {
                 </Grid>
 
                 <Grid padding="16px">
-                <Input _onChange={changeContents} label="게시글 내용" placeholder="게시글 작성" multiLine />
+                <Input _onChange={changeContents} label="게시글 내용" placeholder="게시글 작성" multiLine value={contents} />
                 </Grid>
 
                 <Grid padding="16px">
-                <Button _onClick={addPost}>게시글 작성</Button>
+                    {post_id 
+                        ? <Button _onClick={editPost}>게시글 수정</Button>
+                        : <Button _onClick={addPost}>게시글 작성</Button>
+                    }
             </Grid>
         </Section>  
     )

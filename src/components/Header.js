@@ -8,14 +8,12 @@ import { apiKey } from "../shared/firebase";
 import { history } from "../redux/configureStore";
 import { Grid } from "../elements";
 import { Link } from "react-router-dom";
-import { Route } from "react-router-dom";
 import { viewModal } from "../redux/modules/modal";
 
 const Header = (props) => {
     const dispatch = useDispatch();
     const is_login = useSelector(state => state.user.is_login);
-    const is_modal = useSelector( state => state.modal.click)
-    console.log(is_modal)
+    
     // 알림창 모달창
     let [cnt, setCnt] = useState(0)
     
@@ -27,11 +25,6 @@ const Header = (props) => {
         }
 
     }, [cnt])
-
-    
-
-
-
 
     const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`;
     const is_session = sessionStorage.getItem(_session_key) ? true : false;
