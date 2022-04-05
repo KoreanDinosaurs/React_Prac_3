@@ -47,6 +47,11 @@ const Btn = styled.button`
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    
+    &:hover {
+        color: white;
+        background: #424242;
+    }
 `;
 
 const CircleBtn = styled.button`
@@ -60,6 +65,7 @@ const CircleBtn = styled.button`
     border-radius: 50px;
     font-size: 70px;
     background: #9e9e9e;
+    padding: 2px 0 0 0;
     color: white;
     cursor: pointer;
 

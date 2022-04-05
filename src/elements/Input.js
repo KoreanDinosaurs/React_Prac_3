@@ -11,7 +11,7 @@ const Input = (props) => {
           <Grid>
             {label && <Text margin="0px">{label}</Text>}
             <ElTextarea
-              rows={10}
+              rows={5}
               value={value}
               placeholder={placeholder}
               onChange={_onChange}
@@ -42,6 +42,10 @@ const ElTextarea = styled.textarea`
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
+  font-size: 18px;
+  &::placeholder{
+      font-size: 18px;
+  }
 `;
 
 const ElInput = styled.input`
