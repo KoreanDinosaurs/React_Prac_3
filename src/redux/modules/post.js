@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { collection, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc, updateDoc, orderBy, query, limit } from "firebase/firestore";
 import { db, storage } from "../../shared/firebase"
 import moment from "moment";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -18,10 +18,13 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}))
 // middlewares
 const getPostFB = () => {
     return async function (dispatch, getState, {history}){
-        const querySnapshot = await getDocs(collection(db, "post"));
-        
+        const postRef = collection(db, "post");
+        const q = query(postRef, orderBy("insert_dt", "desc"), limit(3));
+
         const post_list = []
         
+        const querySnapshot = await getDocs(q);
+
         querySnapshot.forEach((doc) => {
             
             let _post = doc.data();
@@ -43,7 +46,7 @@ const getPostFB = () => {
         });
        
         dispatch(setPost(post_list))
-    }
+    }       
 }
 
 const addPostFB = (contents = '') => {
@@ -140,22 +143,8 @@ const editPostFB = (post_id = null, post = {}) => {
             .catch((error) => {
                 console.log("이미지 업로드에 문제가 있습니다.", error);
                 window.alert("이미지 업로드에 문제가 있어요!");
-            })
-                
-                
-                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        }
-        
-        
+            })                                                
+        } 
     }
 }
 

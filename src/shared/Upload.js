@@ -21,7 +21,6 @@ const Upload = (props) => {
         console.log(reader.result);
         dispatch(imageActions.setPreview(reader.result));
         };
-
     };
 
     const uploadFB = () => {

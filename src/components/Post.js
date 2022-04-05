@@ -7,8 +7,7 @@ import { history } from "../redux/configureStore";
 
 const Post = (props) => {
     const uid = useSelector(state => state?.user?.user?.uid)
-    const a = ''
-    console.log(a)
+
     return(
             <Grid width="600px" margin="30px 0 0 0" shadow>
                 <Grid is_flex padding="16px">
