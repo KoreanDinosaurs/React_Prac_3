@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../components/Post";
+import { Button } from "../elements";
 import Section from "../elements/Section";
+import { history } from "../redux/configureStore";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const Main = (props) => {
@@ -19,6 +21,7 @@ const Main = (props) => {
                     return <Post key={post.id} {...post}/>
                 })}
             </Section>
+            <Button circle _onClick={() => {history.push('/write')}}>+</Button>
         </React.Fragment>
     )
 }

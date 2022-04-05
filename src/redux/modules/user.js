@@ -79,7 +79,7 @@ const loginCheckFB = () => {
                         user_name: user.displayName,
                         user_profile: "",
                         id: user.email,
-                        uid: user.uid,
+                        uid: user.uid ? user.uid : "",
                     })
                 )
             } else {

@@ -40,7 +40,7 @@ function App() {
           {/* <Route path="/search" exact component={Search}/> */}
           <Route path="/write/:id" exact component={Postwrite}/>
         </ConnectedRouter>
-        <Button circle _onClick={() => {history.push('/write')}}>+</Button>
+        {/* <Button circle _onClick={() => {history.push('/write')}}>+</Button> */}
       </React.Fragment>
   );
 }
