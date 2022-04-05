@@ -29,8 +29,8 @@ function App() {
 
   return (
       <React.Fragment>
-        <Header />
         <ConnectedRouter history={history}>
+          <Header />
           <Route path="/" exact component={Main} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup}/>

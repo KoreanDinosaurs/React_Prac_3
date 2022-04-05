@@ -31,8 +31,8 @@ Button.defaultProps = {
     padding: "10px",
     margin: false,
     width: "auto",
-    bg: "blue",
-    color: "white",
+    bg: false,
+    color: "",
     size: "14px",
     circle: false,
 }

@@ -7,6 +7,8 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { apiKey } from "../shared/firebase";
 import { history } from "../redux/configureStore";
 import { Grid } from "../elements";
+import { Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 const Header = (props) => {
     const dispatch = useDispatch();
@@ -20,9 +22,19 @@ const Header = (props) => {
             <React.Fragment>
                 <Container>
                     <Btn>DDongram</Btn>
-                    <Grid width="180px" is_flex>
-                        <Button size="22px">Info</Button>
-                        <Button size="22px">Alram</Button>
+                    <Grid width="160px" is_flex>
+                        <Link to="/" style={{padding: "5px 0 0 0"}} tabIndex="0">
+                            <svg aria-label="홈" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                <path d="M22 23h-6.001a1 1 0 01-1-1v-5.455a2.997 2.997 0 10-5.993 0V22a1 1 0 01-1 1H2a1 1 0 01-1-1V11.543a1.002 1.002 0 01.31-.724l10-9.543a1.001 1.001 0 011.38 0l10 9.543a1.002 1.002 0 01.31.724V22a1 1 0 01-1 1z"></path>
+                            </svg>
+                        </Link>
+                        <Link to="/" style={{padding: "7px 0 0 0"}} aria-label="Direct 메시지 - 새로운 알림 링크 0개" tabIndex="0">
+                            <svg aria-label="Direct" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                <line fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" x1="22" x2="9.218" y1="3" y2="10.083"></line>
+                                <polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></polygon>
+                            </svg>
+                        </Link>
+                        
                         <Button size="22px" _onClick={()=>{dispatch(userActions.logoutFB())}}>Log Out</Button>
                     </Grid>
                 </Container>
@@ -47,7 +59,7 @@ const Container = styled.div`
     position: fixed;
     width: 100vw;
     height: 60px;
-    padding: 20px;
+    padding: 20px 40px 20px 20px;
     z-index: 1000;
     background: white;
     display: flex;
