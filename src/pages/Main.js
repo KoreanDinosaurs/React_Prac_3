@@ -16,7 +16,7 @@ const Main = (props) => {
     // const {post_list, is_loading, paging} = useSelector(state => state.post);
   
     useEffect(() => {
-        if(post_list.length === 0){
+        if(post_list.length < 2){
             dispatch(postActions.getPostFB())
         }
     }, [])
