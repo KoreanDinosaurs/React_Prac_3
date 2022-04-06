@@ -48,7 +48,7 @@ const Header = (props) => {
                                 </svg>
                             </Link>
                             
-                            <Button size="22px" _onClick={()=>{dispatch(userActions.logoutFB())}}>Log Out</Button>
+                            <Button size="22px" _onClick={()=>{dispatch(userActions.logoutFB())}} hover>Log Out</Button>
                         </Grid>
                     </Grid>
                 </Container>
@@ -61,8 +61,8 @@ const Header = (props) => {
             <Container>
                 <Btn>DDongram</Btn>
                 <div>
-                    <Button size="22px" margin="0 10px 0 0" _onClick={() => {history.push('/login')}}>Log In</Button>
-                    <Button size="22px" _onClick={() => {history.push('/signup')}}>Sign Up</Button>
+                    <Button size="22px" margin="0 10px 0 0" _onClick={() => {history.push('/login')}} hover>Log In</Button>
+                    <Button size="22px" _onClick={() => {history.push('/signup')}} hover>Sign Up</Button>
                 </div>
             </Container>
         </React.Fragment>

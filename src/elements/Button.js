@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components"
 
 const Button = (props) => {
-    const { children, _onClick, padding, width, bg, color, size, margin, circle } = props;
+    const { children, _onClick, padding, width, bg, color, size, margin, circle, hover } = props;
 
     const styles = {
         padding,
@@ -10,7 +10,8 @@ const Button = (props) => {
         width,
         bg,
         color,
-        size, 
+        size,
+        hover, 
     }
     
     if(circle){
@@ -34,6 +35,7 @@ Button.defaultProps = {
     color: "",
     size: "14px",
     circle: false,
+    hover: false,
 }
 
 const Btn = styled.button`
@@ -47,10 +49,10 @@ const Btn = styled.button`
     border-radius: 10px;
     cursor: pointer;
     
-    &:hover {
+    ${props => props.hover ? `&:hover {
         color: white;
         background: #424242;
-    }
+    }` : ""}
 `;
 
 const CircleBtn = styled.button`

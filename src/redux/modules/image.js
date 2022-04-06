@@ -26,7 +26,6 @@ function uploadImageFB(image) {
         const imageRef = ref(storage, `images/${image.name}`);
         
         uploadBytes(imageRef).then((snapshot) => {
-            console.log(snapshot)
             getDownloadURL(ref(storage, `images/${image.name}`))
             .then((url) => {
                 console.log(url)

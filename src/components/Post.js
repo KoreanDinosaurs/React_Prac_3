@@ -1,12 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-
-import {Grid, Image, Text, Button} from "../elements/index"
 import { history } from "../redux/configureStore";
 
+import {Grid, Image, Text, Button} from "../elements/index";
+
 const Post = (props) => {
-    const uid = useSelector(state => state?.user?.user?.uid)
+    const uid = useSelector(state => state?.user?.user?.uid);
 
     return(
         <Grid width="600px" margin="30px 0 0 0" shadow>
