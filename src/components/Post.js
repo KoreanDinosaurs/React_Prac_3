@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { history } from "../redux/configureStore";
+import { Link } from "react-router-dom";
 
 import {Grid, Image, Text, Button} from "../elements/index"
-
+import { history } from "../redux/configureStore";
 
 const Post = (props) => {
     const uid = useSelector(state => state?.user?.user?.uid)
