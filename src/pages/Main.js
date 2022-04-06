@@ -9,7 +9,11 @@ import { actionCreators as postActions } from "../redux/modules/post";
 const Main = (props) => {
     const dispatch = useDispatch();
     const post_list = useSelector(state => state.post.list);
-    
+    const is_loading = useSelector(state => state.post.is_loading);
+    const paging = useSelector(state => state.post.paging);
+    console.log(paging)
+    // const {post_list, is_loading, paging} = useSelector(state => state.post);
+  
     useEffect(() => {
         dispatch(postActions.getPostFB())
     }, [])
@@ -19,8 +23,10 @@ const Main = (props) => {
             <Section>
                 {post_list.map((post) => {
                     return <Post key={post.id} {...post}/>
+
                 })}
             </Section>
+            <button style={{position: "absolute",bottom: "20px"}}onClick={()=>{dispatch(postActions.getPostFB(paging.next))}}>추가로드</button>
             <Button circle _onClick={() => {history.push('/write')}}>+</Button>
         </React.Fragment>
     )

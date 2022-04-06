@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { collection, getDocs, addDoc, doc, updateDoc, orderBy, query, limit } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc, updateDoc, orderBy, query, limit, Firestore, startAt, getDoc, startAfter } from "firebase/firestore";
 import { db, storage } from "../../shared/firebase"
 import moment from "moment";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -10,21 +10,37 @@ import { actionCreators as imageActions } from "./image";
 const SET_POST = "SET_POST"
 const ADD_POST = "ADD_POST"
 const EDIT_POST = "EDIT_POST"
+const LOADING = "LOADING"
+
 // action creators
-const setPost = createAction(SET_POST, (post_list) => ({post_list}))
+const setPost = createAction(SET_POST, (post_list, paging) => ({post_list, paging}))
 const addPost = createAction(ADD_POST, (post) => ({post}))
 const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}))
+const loading = createAction(LOADING, (is_loading) => ({is_loading}))
+
 
 // middlewares
-const getPostFB = () => {
+const getPostFB = (start = null, size = 3) => {
     return async function (dispatch, getState, {history}){
+    
+        dispatch(loading(true));
+        console.log(start)
         const postRef = collection(db, "post");
-        const q = query(postRef, orderBy("insert_dt", "desc"), limit(3));
-
-        const post_list = []
+        let q = query(postRef, orderBy("insert_dt", "desc"), limit(size + 1));
+        
+        if(start){
+            q = query(postRef, orderBy("insert_dt", "desc"), startAt(start), limit(size + 1));
+        }
         
         const querySnapshot = await getDocs(q);
-
+        
+        let paging = {
+            start: querySnapshot.docs[0],
+            next: querySnapshot.docs.length === size + 1 ? querySnapshot.docs[querySnapshot.docs.length -1] : null,
+            size: size,
+        }
+        
+        const post_list = []
         querySnapshot.forEach((doc) => {
             
             let _post = doc.data();
@@ -41,13 +57,13 @@ const getPostFB = () => {
                 comment_cnt: _post.comment_cnt,
                 insert_dt: _post.insert_dt,
             }
-
             post_list.push(post)
         });
-       
-        dispatch(setPost(post_list))
+        paging.next && post_list.pop()
+        dispatch(setPost(post_list, paging))
     }       
 }
+
 
 const addPostFB = (contents = '') => {
     return async function (dispatch, getState, {history}){
@@ -150,7 +166,9 @@ const editPostFB = (post_id = null, post = {}) => {
 
 // initialState
 const initialState = {
-    list: []
+    list: [],
+    paging: {start: null, next: null, size: 3},
+    is_loading: false,
 }
 
 const initialPost = {
@@ -164,7 +182,9 @@ const initialPost = {
 export default handleActions(
     {
         [SET_POST]: (state, action) => produce(state, (draft) => {
-            draft.list = action.payload.post_list
+            draft.list.push(...action.payload.post_list);
+            draft.paging = action.payload.paging;
+            draft.is_loading = false;
         }),
         
         [ADD_POST]: (state, action) => produce(state, (draft) => {
@@ -175,6 +195,10 @@ export default handleActions(
             let idx = draft.list.findIndex(p => p.id === action.payload.post_id);
             draft.list[idx] = {...draft.list[idx], ...action.payload.post}
         }),
+
+        [LOADING]: (state, action) => produce(state, (draft) => {
+            draft.is_loading = action.payload.is_loading
+        })
 
     }, initialState);
 
