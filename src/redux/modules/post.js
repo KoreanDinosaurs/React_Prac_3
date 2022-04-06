@@ -64,32 +64,6 @@ const getPostFB = (start = null, size = 3) => {
     }       
 }
 
-const getOnePostFB = (id) => {
-    return async function (dispatch, getState, {history}){
-            const docRef = doc(db, "post", id);
-            const docSnap = await getDoc(docRef); 
-            
-            if (docSnap.exists()) {
-                
-                let _post = docSnap.data();
-            
-                let post = {
-                    id: docSnap.id,
-                    user_info: {
-                        user_name: _post.user_name,
-                        user_profile: _post.user_profile,
-                        user_id: _post.user_id
-                    },
-                    image_url: _post.image_url,
-                    contents: _post.contents,
-                    comment_cnt: _post.comment_cnt,
-                    insert_dt: _post.insert_dt,
-                }
-                
-                dispatch(setPost([post]))
-            }   
-    }
-}
 
 const addPostFB = (contents = '') => {
     return async function (dispatch, getState, {history}){
@@ -209,21 +183,8 @@ export default handleActions(
     {
         [SET_POST]: (state, action) => produce(state, (draft) => {
             draft.list.push(...action.payload.post_list);
-
-            // 중복제거
-            draft.list = draft.list.reduce((acc, cur) => {
-                if(acc.findIndex(a => a.id === cur.id) === -1){
-                    return [...acc, cur]
-                } else {
-                    acc[acc.findIndex(a => a.id === cur.id)] = cur
-                    return acc
-                }
-            },[])
-            
-            if(action.payload.paging){
             draft.paging = action.payload.paging;
             draft.is_loading = false;
-            }
         }),
         
         [ADD_POST]: (state, action) => produce(state, (draft) => {
@@ -245,7 +206,6 @@ const actionCreators = {
     getPostFB,
     addPostFB,
     editPostFB,
-    getOnePostFB,
 }
 
 export { actionCreators }
