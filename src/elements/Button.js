@@ -10,7 +10,7 @@ const Button = (props) => {
         width,
         bg,
         color,
-        size, 
+        size,
     }
     
     if(circle){

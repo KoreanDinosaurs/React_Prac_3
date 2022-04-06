@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Post from "../components/Post";
+import { Post } from "../components";
 import { Button } from "../elements";
 import Section from "../elements/Section";
 import { history } from "../redux/configureStore";
-import post, { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as postActions } from "../redux/modules/post";
 import InfinityScroll from "../shared/InfinityScroll";
 
 const Main = (props) => {
@@ -30,8 +30,10 @@ const Main = (props) => {
                     loading={is_loading}
                 >
                     {post_list.map((post) => {
-                        return <Post key={post.id} {...post}/>
-                    })}
+                        return  <div key={post.id} onClick={() => {history.push(`/post/${post.id}`)}}>
+                                    <Post {...post}/>
+                                </div>})
+                    }
                 </InfinityScroll>
             </Section>
             <Button circle _onClick={() => {history.push('/write')}}>+</Button>
