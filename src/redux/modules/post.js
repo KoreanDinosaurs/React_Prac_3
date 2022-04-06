@@ -24,7 +24,7 @@ const getPostFB = (start = null, size = 3) => {
     return async function (dispatch, getState, {history}){
     
         dispatch(loading(true));
-        console.log(start)
+        
         const postRef = collection(db, "post");
         let q = query(postRef, orderBy("insert_dt", "desc"), limit(size + 1));
         

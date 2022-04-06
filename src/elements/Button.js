@@ -22,7 +22,6 @@ const Button = (props) => {
     return(
         <Btn {...styles} onClick={_onClick}>{children}</Btn>
     )
-
 }
 
 Button.defaultProps = {
