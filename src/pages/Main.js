@@ -4,7 +4,7 @@ import Post from "../components/Post";
 import { Button } from "../elements";
 import Section from "../elements/Section";
 import { history } from "../redux/configureStore";
-import post, { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as postActions } from "../redux/modules/post";
 import InfinityScroll from "../shared/InfinityScroll";
 
 const Main = (props) => {
@@ -12,7 +12,7 @@ const Main = (props) => {
     const post_list = useSelector(state => state.post.list);
     const is_loading = useSelector(state => state.post.is_loading);
     const paging = useSelector(state => state.post.paging);
-
+    console.log(post_list)
     // const {post_list, is_loading, paging} = useSelector(state => state.post);
   
     useEffect(() => {

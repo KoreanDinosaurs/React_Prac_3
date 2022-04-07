@@ -5,6 +5,7 @@ import { db, storage } from "../../shared/firebase"
 import moment from "moment";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { actionCreators as imageActions } from "./image";
+import { click } from "@testing-library/user-event/dist/click";
 
 // action
 const SET_POST = "SET_POST"
@@ -44,7 +45,7 @@ const getPostFB = (start = null, size = 3) => {
         querySnapshot.forEach((doc) => {
             
             let _post = doc.data();
-          
+            console.log(_post)
             let post = {
                 id: doc.id,
                 user_info: {
@@ -56,16 +57,18 @@ const getPostFB = (start = null, size = 3) => {
                 contents: _post.contents,
                 comment_cnt: _post.comment_cnt,
                 insert_dt: _post.insert_dt,
+                layout: _post.layout,
             }
             post_list.push(post)
         });
+        console.log(post_list)
         paging.next && post_list.pop()
         dispatch(setPost(post_list, paging))
     }       
 }
 
 
-const addPostFB = (contents = '') => {
+const addPostFB = (contents = '', click= '') => {
     return async function (dispatch, getState, {history}){
         const _user = getState().user.user;
         
@@ -78,6 +81,7 @@ const addPostFB = (contents = '') => {
         const _post = {
             ...initialPost,
             contents: contents,
+            layout: click,
         }
        
         const _image = getState().image.preview;
@@ -176,6 +180,7 @@ const initialPost = {
     contents: "",
     comment_cnt: 0,
     insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    layout: "",
 };
 
 // reducer

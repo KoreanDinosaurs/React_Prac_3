@@ -38,7 +38,8 @@ const Postwrite = (props) => {
     }
     
     const addPost = () => {
-        dispatch(postActions.addPostFB(contents))
+        dispatch(postActions.addPostFB(contents, click))
+        console.log(click, contents)
     }
 
     const editPost = () => {
@@ -46,7 +47,7 @@ const Postwrite = (props) => {
     }
 
     // 레이아웃 선택
-    const [Click, setClick] = useState('');
+    const [click, setClick] = useState('');
 
     const checkBoxClick = (e) => {
         setClick(e.target.value)
