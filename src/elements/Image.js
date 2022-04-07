@@ -45,20 +45,17 @@ const ImageDefault = styled.div`
 `;
 
 const AspectOutter = styled.div`
-    position: relative;
-    overflow: hidden;
     width: 100%;
-    min-width: 250px;
-    height: 600px;
-    background-color: #e0e0e0;
+    /* min-width: 250px; */
 `;
 
 const AspectInner = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-position: center;
+    position: relative;
+    // 비율 정할 수 있어!
+    padding-top: calc(100% /4 * 3);
+    overflow: hidden;
     background-image: url("${(props) => props.src}");
+    background-position: center;
     background-size: cover;
 `;
 

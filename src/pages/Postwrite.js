@@ -31,7 +31,8 @@ const Postwrite = (props) => {
 
     }, [])
 
-    const [contents, setContents] = useState(_post ? _post.contents : "")
+    const [contents, setContents] = useState(_post ? _post.contents : "텍스트")
+    
     const changeContents = (e) => {
         setContents(e.target.value)
     }
@@ -42,6 +43,21 @@ const Postwrite = (props) => {
 
     const editPost = () => {
         dispatch(postActions.editPostFB(post_id, {contents: contents}))
+    }
+
+    // 레이아웃 선택
+    const [Click, setClick] = useState('');
+
+    const checkBoxClick = (e) => {
+        setClick(e.target.value)
+        
+        const checkBoxes = document.getElementsByName("layout")
+        console.log(checkBoxes)
+        checkBoxes.forEach((elem, idx) => {
+            elem.checked = false;
+        })
+        
+        e.target.checked = true;
     }
     
     if(!is_login){
@@ -56,32 +72,64 @@ const Postwrite = (props) => {
     
     return(
         <Section>
-            <Grid width="600px" margin="30px 0 0 0" shadow>
+            <Grid width="80%" margin="30px 0" shadow>
                 <Grid padding="16px">
                     <Text margin="0px" size="36px" bold>
                         {post_id ? "게시글 수정" : "게시글 작성"}
                     </Text>
-                    <Upload/>
+                    <Grid margin="30px 0 0 0">
+                        <Upload/>
+                    </Grid>    
                 </Grid>
 
-                <Grid>
-                    <Grid padding="16px">
-                        <Text margin="0px" size="24px" bold>
-                        미리보기
-                        </Text>
+                <Grid padding="16px 16px 0 16px">
+                    <Text margin="0px" size="24px" bold>
+                    View 고르기
+                    </Text>
+                </Grid>
+                
+                <Grid padding="16px">
+                    <input onClick={checkBoxClick} name="layout" value="레이아웃1" type="checkbox" /> 레이아웃 1
+                    <Grid width="100%" margin="5px 0 0 0" is_flex>
+                        <Grid width="50%">
+                            <Text size="18px" textAlign="center">{contents}</Text>
+                        </Grid>
+                        <Grid width="50%">
+                            <Image shape="rectangle" src={preview ? preview : "http://via.placeholder.com/400x300"}/>
+                        </Grid>
                     </Grid>
-
-                    <Image shape="rectangle" src={preview ? preview : "http://via.placeholder.com/400x300"}/>
                 </Grid>
 
+                <Grid padding="16px">
+                    <input onClick={checkBoxClick} name="layout" value="레이아웃2" type="checkbox" /> 레이아웃 2
+                    <Grid width="100%" margin="5px 0 0 0" is_flex>
+                        <Grid width="50%">
+                            <Image shape="rectangle" src={preview ? preview : "http://via.placeholder.com/400x300"}/>
+                        </Grid>
+                        <Grid width="50%">
+                            <Text size="18px" textAlign="center">{contents}</Text>
+                        </Grid>
+                    </Grid>
+                </Grid>    
+                
+                <Grid padding="16px">
+                    <input onClick={checkBoxClick} name="layout" layout="레이아웃3" type="checkbox" /> 레이아웃 3
+                    <Grid width="100%" margin="5px 0 0 0">
+                        <Grid padding="16px 16px 16px 0">
+                            <Text size="18px">{contents}</Text>
+                        </Grid>
+                        <Image shape="rectangle" src={preview ? preview : "http://via.placeholder.com/400x300"}/>
+                    </Grid>
+                </Grid>
+                
                 <Grid padding="16px">
                     <Input _onChange={changeContents} label="게시글 내용" placeholder="게시글 작성" multiLine value={contents} />
                 </Grid>
 
                 <Grid padding="16px">
                     {post_id 
-                        ? <Button _onClick={editPost}>게시글 수정</Button>
-                        : <Button _onClick={addPost}>게시글 작성</Button>
+                        ? <Button _onClick={editPost} hover>게시글 수정</Button>
+                        : <Button _onClick={addPost} hover>게시글 작성</Button>
                     }
                 </Grid>
             </Grid>

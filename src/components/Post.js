@@ -8,7 +8,7 @@ const Post = (props) => {
     const uid = useSelector(state => state?.user?.user?.uid);
 
     return(
-        <Grid width="600px" margin="30px 0 0 0" shadow>
+        <Grid width="80%" margin="30px 0 0 0" shadow>
             <Grid is_flex padding="16px">
                 <Grid is_flex width="auto">
                     <Image shape="circle" src={props.user_profile} />

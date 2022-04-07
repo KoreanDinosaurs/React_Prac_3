@@ -17,7 +17,6 @@ Section.defaultProps = {
 const Container = styled.div`
     position: absolute;
     width: 100%;
-    height: calc(100vh - 60px);
     margin-top: 60px; // Header height
 
     display: flex;

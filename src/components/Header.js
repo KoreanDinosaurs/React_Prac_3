@@ -33,7 +33,7 @@ const Header = (props) => {
         return(
             <React.Fragment>
                 <Container>
-                    <Grid width="600px" margin="0 auto"is_flex>
+                    <Grid width="80%" margin="0 auto" is_flex>
                         <Btn>DDongram</Btn>
                         <Grid width="160px" is_flex>
                             <Link to="/" style={{padding: "5px 0 0 0"}} tabIndex="0">
