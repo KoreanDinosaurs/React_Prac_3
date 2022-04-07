@@ -1,24 +1,24 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { collection, getDocs, addDoc, doc, updateDoc, orderBy, query, limit, Firestore, startAt, getDoc, startAfter } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc, updateDoc, orderBy, query, limit, startAt, deleteDoc } from "firebase/firestore";
 import { db, storage } from "../../shared/firebase"
 import moment from "moment";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { actionCreators as imageActions } from "./image";
-import { click } from "@testing-library/user-event/dist/click";
 
 // action
 const SET_POST = "SET_POST"
 const ADD_POST = "ADD_POST"
 const EDIT_POST = "EDIT_POST"
 const LOADING = "LOADING"
+const DELETE_POST = "DELETE_POST"
 
 // action creators
 const setPost = createAction(SET_POST, (post_list, paging) => ({post_list, paging}))
 const addPost = createAction(ADD_POST, (post) => ({post}))
 const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}))
 const loading = createAction(LOADING, (is_loading) => ({is_loading}))
-
+const deletePost = createAction(DELETE_POST, (id) => ({id}))
 
 // middlewares
 const getPostFB = (start = null, size = 3) => {
@@ -45,7 +45,7 @@ const getPostFB = (start = null, size = 3) => {
         querySnapshot.forEach((doc) => {
             
             let _post = doc.data();
-            console.log(_post)
+
             let post = {
                 id: doc.id,
                 user_info: {
@@ -61,7 +61,6 @@ const getPostFB = (start = null, size = 3) => {
             }
             post_list.push(post)
         });
-        console.log(post_list)
         paging.next && post_list.pop()
         dispatch(setPost(post_list, paging))
     }       
@@ -168,6 +167,15 @@ const editPostFB = (post_id = null, post = {}) => {
     }
 }
 
+const deletePostFB = (id) => {
+    return async function (dispatch, getState, {history}){
+        await deleteDoc(doc(db, "post", id));
+        alert("삭제가 완료되었습니다.")
+        dispatch(deletePost(id))
+        history.replace('/')
+    }
+}
+
 // initialState
 const initialState = {
     list: [],
@@ -203,6 +211,11 @@ export default handleActions(
 
         [LOADING]: (state, action) => produce(state, (draft) => {
             draft.is_loading = action.payload.is_loading
+        }),
+
+        [DELETE_POST]: (state, action) => produce(state, (draft) => {
+            let idx = draft.list.findIndex(v => v.id === action.payload.id)
+            draft.list.splice(idx, 1)
         })
 
     }, initialState);
@@ -211,6 +224,7 @@ const actionCreators = {
     getPostFB,
     addPostFB,
     editPostFB,
+    deletePostFB,
 }
 
 export { actionCreators }

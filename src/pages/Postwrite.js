@@ -39,7 +39,6 @@ const Postwrite = (props) => {
     
     const addPost = () => {
         dispatch(postActions.addPostFB(contents, click))
-        console.log(click, contents)
     }
 
     const editPost = () => {
@@ -60,6 +59,13 @@ const Postwrite = (props) => {
         
         e.target.checked = true;
     }
+    //
+
+    // 게시글 삭제
+    const deletePost = () => {
+        dispatch(postActions.deletePostFB(post_id))
+    }
+    //
     
     if(!is_login){
         return(
@@ -75,9 +81,12 @@ const Postwrite = (props) => {
         <Section>
             <Grid width="80%" margin="30px 0" shadow>
                 <Grid padding="16px">
-                    <Text margin="0px" size="36px" bold>
-                        {post_id ? "게시글 수정" : "게시글 작성"}
-                    </Text>
+                    <Grid is_flex>
+                        <Text margin="0px" size="36px" bold>
+                            {post_id ? "게시글 수정" : "게시글 작성"}
+                        </Text>
+                        <Button _onClick={deletePost} hover>삭제</Button>
+                    </Grid>
                     <Grid margin="30px 0 0 0">
                         <Upload/>
                     </Grid>    

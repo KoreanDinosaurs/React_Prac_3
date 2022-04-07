@@ -6,7 +6,7 @@ import {Grid, Image, Text, Button} from "../elements/index";
 
 const Post = (props) => {
     const uid = useSelector(state => state?.user?.user?.uid);
-    console.log(props)
+
     if(props.layout === '레이아웃1'){
         return(
             <Grid width="80%" margin="30px 0 0 0" shadow>
@@ -28,7 +28,7 @@ const Post = (props) => {
                     :''}
                 </Grid>
             </Grid>
-            <Grid width="100%" margin="5px 0 0 0" is_flex>
+            <Grid width="100%" margin="5px 0 0 0" padding="0 5px" is_flex>
                 <Grid width="50%">
                     <Text size="18px" textAlign="center">{props.contents}</Text>
                 </Grid>
@@ -62,7 +62,7 @@ const Post = (props) => {
                     :''}
                 </Grid>
             </Grid>
-            <Grid width="100%" margin="5px 0 0 0" is_flex>
+            <Grid width="100%" margin="5px 0 0 0" padding="0 5px" is_flex>
                 <Grid width="50%">
                     <Image shape="rectangle" src={props.image_url}/>
                 </Grid>
@@ -77,7 +77,7 @@ const Post = (props) => {
         )
     } else {
         return(
-            <Grid width="80%" margin="30px 0 0 0" shadow>
+            <Grid width="80%" margin="30px 0" shadow>
                 <Grid is_flex padding="16px">
                     <Grid is_flex width="auto">
                         <Image shape="circle" src={props.user_profile} />
@@ -99,7 +99,7 @@ const Post = (props) => {
                 <Grid padding="16px">
                     <Text>{props.contents}</Text>
                 </Grid>
-                <Grid>
+                <Grid padding="0 5px">
                     <Image shape="rectangle" src={props.image_url} />
                 </Grid>
                 <Grid padding="16px">

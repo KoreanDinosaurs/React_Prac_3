@@ -12,7 +12,6 @@ const Main = (props) => {
     const post_list = useSelector(state => state.post.list);
     const is_loading = useSelector(state => state.post.is_loading);
     const paging = useSelector(state => state.post.paging);
-    console.log(post_list)
     // const {post_list, is_loading, paging} = useSelector(state => state.post);
   
     useEffect(() => {
