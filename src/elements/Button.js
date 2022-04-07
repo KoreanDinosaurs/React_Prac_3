@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components"
 
 const Button = (props) => {
-    const { children, _onClick, padding, width, bg, color, size, margin, circle, hover } = props;
+    const { children, _onClick, padding, width, bg, color, size, margin, circle, hover, disabled } = props;
 
     const styles = {
         padding,
@@ -16,12 +16,12 @@ const Button = (props) => {
     
     if(circle){
         return(
-            <CircleBtn {...styles} onClick={_onClick}>{children}</CircleBtn>
+            <CircleBtn {...styles} onClick={_onClick} >{children}</CircleBtn>
         )
     }
 
     return(
-        <Btn {...styles} onClick={_onClick}>{children}</Btn>
+        <Btn {...styles} onClick={_onClick} disabled={disabled}>{children}</Btn>
     )
 }
 
@@ -36,6 +36,7 @@ Button.defaultProps = {
     size: "14px",
     circle: false,
     hover: false,
+    disabled: false,
 }
 
 const Btn = styled.button`

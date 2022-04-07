@@ -1,6 +1,7 @@
 import React from "react";
 import { actionCreators as imageActions } from "../redux/modules/image";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "../elements";
 
 const Upload = (props) => {
     const dispatch = useDispatch();

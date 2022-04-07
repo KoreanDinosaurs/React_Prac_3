@@ -16,9 +16,16 @@ const Login = (props) => {
         dispatch(userActions.loginFB(id, pwd));
     }
 
+    const emailValueCheckBool = Boolean(id)
+    const pwdValueCheckBool = Boolean(pwd)
+
+    const isValid = emailValueCheckBool && pwdValueCheckBool;
+    
+    
+    
     return(
         <Section>
-            <Grid width="40%">
+            <Grid margin="120px 0" width="40%">
                 <Text size="24px" bold>로그인</Text>
                 
                 <Grid margin="20px 0 0 0">
@@ -31,7 +38,7 @@ const Login = (props) => {
                 _onChange={e => setPwd(e.target.value)} />
                 </Grid>
                 
-                <Button _onClick={login} width="100%" margin="20px 0 0 0">로그인 하기</Button>
+                <Button _onClick={login} width="100%" margin="20px 0 0 0" disabled={!isValid}>로그인 하기</Button>
             </Grid>
         </Section>
     )

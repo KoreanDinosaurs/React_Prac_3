@@ -42,7 +42,7 @@ const Postwrite = (props) => {
     }
 
     const editPost = () => {
-        dispatch(postActions.editPostFB(post_id, {contents: contents}))
+        dispatch(postActions.editPostFB(post_id, {contents: contents, layout: click}))
     }
 
     // 레이아웃 선택

@@ -52,7 +52,7 @@ const AspectOutter = styled.div`
 const AspectInner = styled.div`
     position: relative;
     // 비율 정할 수 있어!
-    padding-top: calc(100% /4 * 3);
+    padding-top: calc(100% /4 * 3.3);
     overflow: hidden;
     background-image: url("${(props) => props.src}");
     background-position: center;
